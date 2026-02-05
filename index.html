@@ -2,78 +2,79 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Portfolio Tuan Baix</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baix Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 
 <style>
 
 body{
   margin:0;
-  background:#222;
+  font-family:'Orbitron',sans-serif;
+  background:#050510;
+  color:#0ff;
+}
+
+/* Navbar */
+nav{
+  background:#080818;
   display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  font-family:Arial,sans-serif;
+  justify-content:space-around;
+  padding:15px;
+  box-shadow:0 0 20px cyan;
 }
 
-/* BOOK */
-.book{
-  width:350px;
-  height:500px;
-  perspective:2000px;
-  position:relative;
-}
-
-/* PAGE */
-.page > *{
-  transform: rotateY(180deg);
-}
-  width:100%;
-  height:100%;
-  background:#f5f1e8;
-  position:absolute;
-  border-radius:8px;
-  transform-origin:left;
-  transition:transform 1s;
-  box-shadow:0 0 20px rgba(0,0,0,0.3);
-  padding:30px;
-  box-sizing:border-box;
-
-  backface-visibility: hidden;
-}
-
-
-/* TEXT */
-h2{
-  text-align:center;
-}
-
-p{
-  line-height:1.6;
-}
-
-/* BUTTON */
-.controls{
-  position:absolute;
-  bottom:-60px;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-}
-
-button{
-  padding:10px 20px;
-  border:none;
-  background:#00c6ff;
-  border-radius:20px;
-  font-weight:bold;
+nav button{
+  background:none;
+  border:1px solid cyan;
+  color:cyan;
+  padding:8px 15px;
   cursor:pointer;
+  transition:0.3s;
 }
 
-/* FLIP EFFECT */
-.flipped{
-  transform:rotateY(-180deg);
-  z-index:0;
+nav button:hover{
+  background:cyan;
+  color:black;
+  box-shadow:0 0 15px cyan;
+}
+
+/* Content */
+section{
+  display:none;
+  padding:40px;
+  min-height:80vh;
+  animation:fade 0.5s;
+}
+
+.active{
+  display:block;
+}
+
+/* Card */
+.card{
+  background:#0a0a1a;
+  padding:20px;
+  border:1px solid cyan;
+  box-shadow:0 0 15px cyan;
+  border-radius:10px;
+  margin:20px 0;
+}
+
+a{
+  color:#0ff;
+  text-decoration:none;
+}
+
+a:hover{
+  text-shadow:0 0 10px cyan;
+}
+
+/* Animasi */
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
 }
 
 </style>
@@ -81,118 +82,81 @@ button{
 
 <body>
 
-<div class="book">
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- PAGE 1 -->
-  <div class="page" id="p1" style="z-index:4;">
-    <h2>📖 Tuan Baix</h2>
+<!-- NAV -->
+<nav>
+  <button onclick="openPage('home')">Dashboard</button>
+  <button onclick="openPage('skills')">Skills</button>
+  <button onclick="openPage('docs')">Dokumentasi</button>
+  <button onclick="openPage('contact')">Kontak</button>
+</nav>
+
+<!-- DASHBOARD -->
+<section id="home" class="active">
+  <div class="card">
+    <h1>👋 Halo, Saya Baix</h1>
+    <p>Web Developer | Tech Enthusiast | Creator</p>
+
     <p>
-      Selamat datang di portfolio saya.<br><br>
-      Saya adalah Web Developer, Creator, dan Tech Enthusiast.
+    Saya adalah seorang pengembang yang fokus
+    pada teknologi, otomasi, dan sistem digital.
     </p>
   </div>
+</section>
 
-  <!-- PAGE 2 -->
-  <div class="page" id="p2" style="z-index:3;">
-    <h2>💻 Project</h2>
-    <p>
-      • Website Portfolio<br>
-      • Bot WhatsApp<br>
-      • Server Termux<br>
-      • Automation
-    </p>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="card">
+    <h2>🚀 Skills</h2>
+
+    <ul>
+      <li>HTML / CSS / JS</li>
+      <li>Node.js</li>
+      <li>Termux Server</li>
+      <li>Bot WhatsApp</li>
+      <li>GitHub Pages</li>
+    </ul>
   </div>
+</section>
 
-  <!-- PAGE 3 -->
-  <div class="page" id="p3" style="z-index:2;">
-    <h2>⚡ Skill</h2>
-    <p>
-      • HTML / CSS / JS<br>
-      • Node.js<br>
-      • Linux / Termux<br>
-      • GitHub
-    </p>
+<!-- DOKUMENTASI -->
+<section id="docs">
+  <div class="card">
+    <h2>📸 Dokumentasi Project</h2>
+
+    <p>✅ Bot WhatsApp</p>
+    <p>✅ Web Portfolio</p>
+    <p>✅ Automation Script</p>
+    <p>✅ Server Termux</p>
   </div>
+</section>
 
-  <!-- PAGE 4 -->
-  <div class="page" id="p4" style="z-index:1;">
-    <h2>📞 Kontak</h2>
-    <p>
-      Email: baix@gmail.com<br>
-      IG: @ixwgn_69<br>
-      GitHub: baixwiguna69
-    </p>
+<!-- KONTAK -->
+<section id="contact">
+  <div class="card">
+    <h2>📞 Kontak Saya</h2>
+
+    <p>📱 WhatsApp: <a href="https://wa.me/6285179816502">Klik</a></p>
+    <p>📸 Instagram: <a href="#">@ixwgn_69</a></p>
+    <p>📧 Email: baixwiguna69@email.com</p>
+    <p>📘 Facebook: fb.com/username</p>
+
   </div>
-
-  </div>
-
-</div>
+</section>
 
 <script>
-let pages = document.querySelectorAll(".page");
-let current = 0;
 
-let startX = 0;
-let endX = 0;
+function openPage(id){
 
-function showPage(n){
-  pages.forEach((p,i)=>{
-    if(i < n){
-      p.classList.add("flipped");
-    }else{
-      p.classList.remove("flipped");
-    }
+  document.querySelectorAll("section").forEach(sec=>{
+    sec.classList.remove("active");
   });
-}
 
-// Touch Start
-document.addEventListener("touchstart", e=>{
-  startX = e.touches[0].clientX;
-});
-
-// Touch End
-document.addEventListener("touchend", e=>{
-  endX = e.changedTouches[0].clientX;
-  handleSwipe();
-});
-
-function handleSwipe(){
-  let diff = startX - endX;
-
-  // Swipe kiri → Next
-  if(diff > 50){
-    if(current < pages.length){
-      current++;
-      showPage(current);
-    }
-  }
-
-  // Swipe kanan → Prev
-  if(diff < -50){
-    if(current > 0){
-      current--;
-      showPage(current);
-    }
-  }
-}
-</script>
-
-
-let current = 0;
-const pages = document.querySelectorAll(".page");
-
-function next(){
-  if(current < pages.length){
-    pages[current].classList.add("flipped");
-    current++;
-  }
-}
-
-function prev(){
-  if(current > 0){
-    current--;
-    pages[current].classList.remove("flipped");
-  }
+  document.getElementById(id).classList.add("active");
 }
 
 </script>
