@@ -1,222 +1,153 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portofolio | Baix</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
+<meta charset="UTF-8">
+<title>Portfolio Tuan Baix</title>
 
-    body {
-      background: linear-gradient(135deg, #0f172a, #020617);
-      color: #fff;
-      min-height: 100vh;
-    }
+<style>
 
-    header {
-      padding: 40px 20px;
-      text-align: center;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(10px);
-    }
+body{
+  margin:0;
+  background:#222;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  font-family:Arial,sans-serif;
+}
 
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
+/* BOOK */
+.book{
+  width:350px;
+  height:500px;
+  perspective:2000px;
+  position:relative;
+}
 
-    header p {
-      color: #94a3b8;
-    }
+/* PAGE */
+.page{
+  width:100%;
+  height:100%;
+  background:#f5f1e8;
+  position:absolute;
+  border-radius:8px;
+  transform-origin:left;
+  transition:transform 1s;
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
+  padding:30px;
+  box-sizing:border-box;
+}
 
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-    }
+/* TEXT */
+h2{
+  text-align:center;
+}
 
-    nav a {
-      text-decoration: none;
-      color: #38bdf8;
-      font-weight: 500;
-      transition: 0.3s;
-    }
+p{
+  line-height:1.6;
+}
 
-    nav a:hover {
-      color: #0ea5e9;
-    }
+/* BUTTON */
+.controls{
+  position:absolute;
+  bottom:-60px;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+}
 
-    section {
-      max-width: 1000px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
+button{
+  padding:10px 20px;
+  border:none;
+  background:#00c6ff;
+  border-radius:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    .about,
-    .skills,
-    .projects,
-    .contact {
-      background: rgba(255,255,255,0.05);
-      padding: 30px;
-      border-radius: 15px;
-      margin-bottom: 40px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
-    }
+/* FLIP EFFECT */
+.flipped{
+  transform:rotateY(-180deg);
+  z-index:0;
+}
 
-    h2 {
-      margin-bottom: 20px;
-      border-left: 4px solid #38bdf8;
-      padding-left: 10px;
-    }
-
-    .skills-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-    }
-
-    .skill {
-      background: #020617;
-      padding: 15px;
-      text-align: center;
-      border-radius: 10px;
-      border: 1px solid #1e293b;
-    }
-
-    .projects-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-
-    .project {
-      background: #020617;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #1e293b;
-      transition: 0.3s;
-    }
-
-    .project:hover {
-      transform: translateY(-5px);
-      border-color: #38bdf8;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #94a3b8;
-      background: rgba(255,255,255,0.03);
-    }
-
-    .music-control {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #020617;
-      padding: 10px 15px;
-      border-radius: 30px;
-      border: 1px solid #1e293b;
-      cursor: pointer;
-      color: #38bdf8;
-    }
-  </style>
+</style>
 </head>
+
 <body>
 
-  <!-- Background Music -->
-  <audio id="bgm" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+<div class="book">
 
-  <header>
-    <h1>Baix Wiguna</h1>
-    <p>Web Developer | Content Creator | Tech Enthusiast</p>
+  <!-- PAGE 1 -->
+  <div class="page" id="p1" style="z-index:4;">
+    <h2>📖 Tuan Baix</h2>
+    <p>
+      Selamat datang di portfolio saya.<br><br>
+      Saya adalah Web Developer, Creator, dan Tech Enthusiast.
+    </p>
+  </div>
 
-    <nav>
-      <a href="#about">Tentang</a>
-      <a href="#skills">Skill</a>
-      <a href="#projects">Project</a>
-      <a href="#contact">Kontak</a>
-    </nav>
-  </header>
+  <!-- PAGE 2 -->
+  <div class="page" id="p2" style="z-index:3;">
+    <h2>💻 Project</h2>
+    <p>
+      • Website Portfolio<br>
+      • Bot WhatsApp<br>
+      • Server Termux<br>
+      • Automation
+    </p>
+  </div>
 
-  <section>
-    <div class="about" id="about">
-      <h2>Tentang Saya</h2>
-      <p>
-        Saya adalah seorang developer yang tertarik dengan teknologi, website,
-        dan otomasi. Saya senang belajar hal baru dan membangun project digital.
-      </p>
-    </div>
+  <!-- PAGE 3 -->
+  <div class="page" id="p3" style="z-index:2;">
+    <h2>⚡ Skill</h2>
+    <p>
+      • HTML / CSS / JS<br>
+      • Node.js<br>
+      • Linux / Termux<br>
+      • GitHub
+    </p>
+  </div>
 
-    <div class="skills" id="skills">
-      <h2>Keahlian</h2>
-      <div class="skills-list">
-        <div class="skill">HTML</div>
-        <div class="skill">CSS</div>
-        <div class="skill">JavaScript</div>
-        <div class="skill">Python</div>
-        <div class="skill">Termux</div>
-        <div class="skill">Git</div>
-      </div>
-    </div>
+  <!-- PAGE 4 -->
+  <div class="page" id="p4" style="z-index:1;">
+    <h2>📞 Kontak</h2>
+    <p>
+      Email: baix@gmail.com<br>
+      IG: @ixwgn_69<br>
+      GitHub: baixwiguna69
+    </p>
+  </div>
 
-    <div class="projects" id="projects">
-      <h2>Project</h2>
-      <div class="projects-list">
-        <div class="project">
-          <h3>Bot WhatsApp</h3>
-          <p>Membuat bot otomatis menggunakan Python & NodeJS.</p>
-        </div>
-        <div class="project">
-          <h3>Website Portfolio</h3>
-          <p>Website pribadi yang elegan dan responsif.</p>
-        </div>
-        <div class="project">
-          <h3>Tool Termux</h3>
-          <p>Kumpulan script produktivitas Android.</p>
-        </div>
-      </div>
-    </div>
+  <!-- BUTTON -->
+  <div class="controls">
+    <button onclick="prev()">⬅ Prev</button>
+    <button onclick="next()">Next ➡</button>
+  </div>
 
-    <div class="contact" id="contact">
-      <h2>Kontak</h2>
-      <p>Email: baixwiguna69@email.com</p>
-      <p>WhatsApp: 085179816502</p>
-      <p>Instagram: @ixwgn_69</p>
-    </div>
-  </section>
+</div>
 
-  <footer>
-    <p>© 2026 Baix Wiguna. All Rights Reserved.</p>
-  </footer>
+<script>
 
-  <div class="music-control" onclick="toggleMusic()">🎵 Play Music</div>
+let current = 0;
+const pages = document.querySelectorAll(".page");
 
-  <script>
-    const music = document.getElementById("bgm");
-    const btn = document.querySelector(".music-control");
-    let playing = false;
+function next(){
+  if(current < pages.length){
+    pages[current].classList.add("flipped");
+    current++;
+  }
+}
 
-    function toggleMusic() {
-      if (!playing) {
-        music.play();
-        btn.textContent = "⏸ Pause Music";
-      } else {
-        music.pause();
-        btn.textContent = "🎵 Play Music";
-      }
-      playing = !playing;
-    }
-  </script>
+function prev(){
+  if(current > 0){
+    current--;
+    pages[current].classList.remove("flipped");
+  }
+}
+
+</script>
 
 </body>
 </html>
+
