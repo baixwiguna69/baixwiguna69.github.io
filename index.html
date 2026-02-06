@@ -1,350 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
-<head><link rel="stylesheet" href="style.css">
-<style>
-
-/* JASA / WARUNG */
-
-.shop-container{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.product-card{
-  background: rgba(0,255,255,0.05);
-  border: 1px solid cyan;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 0 15px cyan;
-  transition: 0.3s;
-}
-
-.product-card:hover{
-  transform: translateY(-8px);
-  box-shadow: 0 0 25px cyan;
-}
-
-.product-card h3{
-  color: cyan;
-  margin-bottom: 10px;
-}
-
-.product-card p{
-  color: #ccc;
-  font-size: 14px;
-}
-
-.product-card a{
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 18px;
-  background: cyan;
-  color: black;
-  border-radius: 20px;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.product-card a:hover{
-  background: white;
-}
-
-</style>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baix Portfolio</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-
-<style>
-
-body{
-  margin:0;
-  font-family:'Orbitron',sans-serif;
-  background:#050510;
-  color:#0ff;
-}
-
-/* Navbar */
-nav{
-  background:#080818;
-  display:flex;
-  justify-content:space-around;
-  padding:15px;
-  box-shadow:0 0 20px cyan;
-}
-
-nav button{
-  background:none;
-  border:1px solid cyan;
-  color:cyan;
-  padding:8px 15px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-nav button:hover{
-  background:cyan;
-  color:black;
-  box-shadow:0 0 15px cyan;
-}
-
-/* Content */
-section{
-  display:none;
-  padding:40px;
-  min-height:80vh;
-  animation:fade 0.5s;
-}
-
-.active{
-  display:block;
-}
-
-/* Card */
-.card{
-  background:#0a0a1a;
-  padding:20px;
-  border:1px solid cyan;
-  box-shadow:0 0 15px cyan;
-  border-radius:10px;
-  margin:20px 0;
-}
-
-a{
-  color:#0ff;
-  text-decoration:none;
-}
-
-a:hover{
-  text-shadow:0 0 10px cyan;
-}
-
-/* Animasi */
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-</style>
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "68721afad8d14ca1aedff5417e23b198"}'></script><!-- End Cloudflare Web Analytics -->
-</head>
-
-<body>
-
-<!-- MUSIC -->
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<!-- NAV -->
-<nav>
-  <button onclick="openPage('home')">Dashboard</button>
-  <button onclick="openPage('skills')">Skills</button>
-  <button onclick="openPage('docs')">Dokumentasi</button>
-  <button onclick="openPage('contact')">Kontak</button>
-  <button onclick="openPage('shop')">🏪 Warung Baix</button>
-</nav>
-
-<!-- DASHBOARD -->
-<section id="home" class="active">
-  <div class="card">
-    <h1>👋 Halo, Saya Baix</h1>
-    <p>Web Developer | Tech Enthusiast | Creator</p>
-
-    <p>
-    Saya adalah seorang pengembang yang fokus
-    pada teknologi, otomasi, dan sistem digital.
-    </p>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="card">
-    <h2>🚀 Skills</h2>
-
-    <ul>
-      <li>HTML / CSS / JS</li>
-      <li>Node.js</li>
-      <li>Termux Server</li>
-      <li>Bot WhatsApp</li>
-      <li>GitHub Pages</li>
-    </ul>
-  </div>
-</section>
-
-<!-- DOKUMENTASI -->
-<section id="docs">
-  <div class="card">
-    <h2>📸 Dokumentasi Project</h2>
-
-    <p>✅ Bot WhatsApp</p>
-    <p>✅ Web Portfolio</p>
-    <p>✅ Automation Script</p>
-    <p>✅ Server Termux</p>
-  </div>
-</section>
-
-<!-- KONTAK -->
-<section id="contact">
-  <div class="card">
-    <h2>📞 Kontak Saya</h2>
-
-    <p>📱 WhatsApp: <a href="https://wa.me/6285179816502">Klik</a></p>
-    <p>📸 Instagram: <a href="#">@ixwgn_69</a></p>
-    <p>📧 Email: baixwiguna69@email.com</p>
-    <p>📘 Facebook: fb.com/username</p>
-
-<!-- WARUNG BAIX -->
-<section id="shop">
-
-<div id="warung" class="page">
-
-  <h2 class="title">🛒 Warung Baix</h2>
-  <p class="subtitle">Produk Digital & Affiliate Pilihan</p>
-
-  <div class="shop-container">
-
-    <!-- Produk 1 -->
-    <div class="product-card">
-      <h3>Sayang Anak</h3>
-      <p>Buat yang sayang anak saja</p>
-      <a href="https://s.shopee.co.id/AABUALy0O2" target="_blank">
-        Beli Sekarang
-      </a>
-    </div>
-
-    <!-- Produk 2 -->
-    <div class="product-card">
-      <h3>The Psycology of Money</h3>
-      <p>Ngga ada orang boros tapi duitnya aja yang kurang</p>
-      <a href="https://s.shopee.co.id/AUoKZXZ7UH" target="_blank">
-        Lihat Contoh
-      </a>
-    </div>
-
-    <!-- Produk 3 -->
-    <div class="product-card">
-      <h3>Kendaraan</h3>
-      <p>Solusi untuk ngga kehujanan & ngga kena macet dijalan</p>
-      <a href="https://s.shopee.co.id/3VeaEzVl9A" target="_blank">
-        Download
-      </a>
-    </div>
-
-    <!-- Produk 4 -->
-    <div id="jasa" class="page">
-
-  <h2 class="title">🚀 Baix Digital Studio</h2>
-  <p class="subtitle">Solusi Digital Modern & Profesional</p>
-
-  <div class="shop-container">
-
-    <!-- Undangan -->
-    <div class="product-card">
-      <h3>💍 Undangan Online</h3>
-      <p>Website undangan pernikahan modern & elegan.</p>
-      <a href="https://wa.me/6285179816502?text=Halo%20Baix,%20saya%20ingin%20pesan%20Undangan%20Online"
-         target="_blank">
-        Pesan Sekarang
-      </a>
-    </div>
-
-    <!-- Template -->
-    <div class="product-card">
-      <h3>📊 Template Keuangan</h3>
-      <p>Excel otomatis untuk bisnis & pribadi.</p>
-      <a href="https://wa.me/6285179816502?text=Halo%20Baix,%20saya%20ingin%20pesan%20Template%20Keuangan"
-         target="_blank">
-        Pesan Sekarang
-      </a>
-    </div>
-
-    <!-- Website -->
-    <div class="product-card">
-      <h3>🌐 Website Portfolio</h3>
-      <p>Website personal / UMKM profesional.</p>
-      <a href="https://wa.me/6285179816502?text=Halo%20Baix,%20saya%20ingin%20buat%20Website%20Portfolio"
-         target="_blank">
-        Pesan Sekarang
-      </a>
-    </div>
-
-  </div>
-
-</div>
-
-
-  </div>
-
-</div>
-
-
-<div class="card">
-
-<h3>📱 Aksesoris Coding</h3>
-<p>Keyboard, holder HP, mouse, dll.</p>
-
-<a href="https://s.shopee.co.id/XXXX" target="_blank">
-👉 Cek Produk
-</a>
-
-</div>
-
-<div class="card">
-
-<h3>🎨 Canva Pro</h3>
-<p>Desain CV, konten, dan presentasi.</p>
-
-<a href="https://partner.canva.com/XXXX" target="_blank">
-👉 Upgrade Canva Pro
-</a>
-
-</div>
-
-<div class="card">
-
-<h3>🎓 Kursus Online Coding</h3>
-<p>Belajar web & programming dari nol.</p>
-
-<a href="https://shope.ee/XXXX" target="_blank">
-👉 Mulai Belajar
-</a>
-
-</div>
-
-</section>
-
-
-  </div>
-</section>
-
-<script>
-
-function openPage(id){
-
-  document.querySelectorAll("section").forEach(sec=>{
-    sec.classList.remove("active");
-  });
-
-  document.getElementById(id).classList.add("active");
-}
-
-</script>
-
-</body>
-<!DOCTYPE html>
-<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Warung Baix - Jasa Digital</title>
+<title>Baix Portfolio</title>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -353,46 +16,70 @@ function openPage(id){
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: Arial, sans-serif;
+  font-family:'Orbitron',sans-serif;
 }
 
-/* BACKGROUND */
 body{
-  background: linear-gradient(135deg,#05050f,#020222,#05050f);
+  background:linear-gradient(135deg,#02020f,#040424,#02020f);
   color:white;
   min-height:100vh;
+  overflow-x:hidden;
 }
 
-/* HEADER */
-header{
-  text-align:center;
-  padding:30px 10px;
+/* MUSIC */
+audio{
+  display:none;
+}
+
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  padding:15px;
+  background:rgba(0,255,255,0.05);
   border-bottom:1px solid cyan;
+  box-shadow:0 0 15px cyan;
+  flex-wrap:wrap;
 }
 
-header h1{
+nav button{
+  background:transparent;
+  border:1px solid cyan;
   color:cyan;
-  font-size:28px;
-  text-shadow:0 0 15px cyan;
+  padding:8px 15px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
-header p{
-  color:#aaa;
-  margin-top:8px;
+nav button:hover,
+nav button.active{
+  background:cyan;
+  color:black;
+  box-shadow:0 0 15px cyan;
 }
 
-/* CONTAINER */
-.container{
+/* MAIN */
+main{
   max-width:1100px;
   margin:auto;
-  padding:20px;
+  padding:25px;
 }
 
-/* GRID */
-.shop-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
+/* PAGE */
+.page{
+  display:none;
+  animation:fade 0.5s;
+}
+
+.page.active{
+  display:block;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
 /* CARD */
@@ -401,64 +88,46 @@ header p{
   border:1px solid cyan;
   border-radius:15px;
   padding:20px;
-  text-align:center;
+  margin-bottom:20px;
   box-shadow:0 0 15px cyan;
-  transition:0.3s;
 }
 
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 30px cyan;
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
 }
 
-/* ICON */
-.card .icon{
+/* SHOP */
+.shop-card{
+  text-align:center;
+}
+
+.shop-card .icon{
   font-size:40px;
-  margin-bottom:10px;
-}
-
-/* TITLE */
-.card h3{
-  color:cyan;
-  margin:10px 0;
-}
-
-/* DESC */
-.card p{
-  font-size:14px;
-  color:#ccc;
-  line-height:1.6;
-}
-
-/* PRICE */
-.price{
-  margin:10px 0;
-  color:#00ffcc;
-  font-weight:bold;
 }
 
 /* BUTTON */
-.card a{
+.btn{
   display:inline-block;
-  margin-top:15px;
-  padding:10px 20px;
+  margin-top:10px;
+  padding:8px 15px;
   background:cyan;
   color:black;
   border-radius:20px;
   text-decoration:none;
   font-weight:bold;
-  transition:0.3s;
 }
 
-.card a:hover{
+.btn:hover{
   background:white;
 }
 
 /* FOOTER */
 footer{
   text-align:center;
-  padding:20px;
-  margin-top:30px;
+  padding:15px;
   border-top:1px solid cyan;
   color:#aaa;
   font-size:13px;
@@ -467,23 +136,173 @@ footer{
 </style>
 </head>
 
+
 <body>
 
-<!-- HEADER -->
-<header>
-  <h1>🛒 WARUNG BAIX</h1>
-  <p>Jasa & Produk Digital Profesional</p>
-</header>
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 
-<!-- CONTENT -->
-<div class="container">
+<!-- NAV -->
+<nav>
+  <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
+  <button onclick="showPage('skills',this)">Skills</button>
+  <button onclick="showPage('docs',this)">Dokumentasi</button>
+  <button onclick="showPage('contact',this)">Kontak</button>
+  <button onclick="showPage('shop',this)">🛒 Warung Baix</button>
+</nav>
 
-  <div class="shop-grid">
 
-    <!-- PRODUK 1 -->
-    <div class="card">
+<!-- MAIN -->
+<main>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+
+  <div class="card">
+    <h2>👋 Halo, Saya Baix</h2><br>
+    <p>Developer | Freelancer | Digital Creator</p><br>
+    <p>Saya fokus membangun solusi digital, website, automation, dan produk online.</p>
+  </div>
+
+</section>
+
+
+<!-- SKILLS -->
+<section id="skills" class="page">
+
+  <div class="grid">
+
+    <div class="card">HTML & CSS</div>
+    <div class="card">JavaScript</div>
+    <div class="card">Node.js</div>
+    <div class="card">Termux</div>
+    <div class="card">Cloudflare</div>
+    <div class="card">GitHub</div>
+
+  </div>
+
+</section>
+
+
+<!-- DOCS -->
+<section id="docs" class="page">
+
+  <div class="card">
+    <h3>📂 Projek</h3><br>
+
+    <ul>
+      <li>✔ Website Portfolio</li>
+      <li>✔ WhatsApp Bot</li>
+      <li>✔ Landing Page</li>
+      <li>✔ Automation Script</li>
+      <li>✔ Affiliate Page</li>
+    </ul>
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact" class="page">
+
+  <div class="card">
+
+    <h3>📞 Kontak Saya</h3><br>
+
+    <p>WhatsApp: <b>085179816502</b></p>
+    <p>Email: <b>baixwiguna69@gmail.com</b></p>
+    <p>Instagram: <b>@ixwgn_69</b></p>
+    <p>Facebook: <b>Ba'ix Wiguna</b></p>
+
+    <br>
+
+    <a class="btn" href="https://wa.me/6285179816502" target="_blank">
+      Chat WhatsApp
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- SHOP -->
+<section id="shop" class="page">
+
+  <div class="grid">
+
+    <div class="card shop-card">
       <div class="icon">💍</div>
-      <
+      <h3>Undangan Online</h3>
+      <p>Website undangan modern</p>
+      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Undangan" target="_blank">
+        Order
+      </a>
+    </div>
+
+    <div class="card shop-card">
+      <div class="icon">📊</div>
+      <h3>Template Keuangan</h3>
+      <p>Excel otomatis</p>
+      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Template" target="_blank">
+        Order
+      </a>
+    </div>
+
+    <div class="card shop-card">
+      <div class="icon">💻</div>
+      <h3>Website Portfolio</h3>
+      <p>Personal branding</p>
+      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Website" target="_blank">
+        Order
+      </a>
+    </div>
+
+    <div class="card shop-card">
+      <div class="icon">🛍️</div>
+      <h3>Affiliate Setup</h3>
+      <p>Landing page affiliate</p>
+      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Affiliate" target="_blank">
+        Order
+      </a>
+    </div>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+© 2026 Baix Portfolio | Powered by Baix
+</footer>
+
+
+<!-- SCRIPT -->
+<script>
+
+function showPage(id,btn){
+
+  document.querySelectorAll('.page').forEach(p=>{
+    p.classList.remove('active');
+  });
+
+  document.querySelectorAll('nav button').forEach(b=>{
+    b.classList.remove('active');
+  });
+
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+
+}
+
+</script>
+
+</body>
 </html>
 
