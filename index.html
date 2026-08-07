@@ -4,133 +4,833 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Baix Portfolio</title>
+<title>Baix — Digital Creative Portfolio</title>
 
-<!-- FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* RESET */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Orbitron',sans-serif;
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-  background:linear-gradient(135deg,#02020f,#040424,#02020f);
-  color:white;
-  min-height:100vh;
-  overflow-x:hidden;
+html {
+    scroll-behavior: smooth;
 }
 
-/* MUSIC */
-audio{
-  display:none;
+body {
+    font-family: 'Inter', sans-serif;
+    background:
+        radial-gradient(circle at 10% 10%, rgba(112, 67, 255, .12), transparent 30%),
+        radial-gradient(circle at 90% 30%, rgba(0, 200, 255, .08), transparent 30%),
+        #08080d;
+    color: #f5f5f7;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* NAVBAR */
-nav{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  padding:15px;
-  background:rgba(0,255,255,0.05);
-  border-bottom:1px solid cyan;
-  box-shadow:0 0 15px cyan;
-  flex-wrap:wrap;
+
+/* =========================================================
+   BACKGROUND EFFECT
+========================================================= */
+
+.background-glow {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: rgba(120, 80, 255, .07);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: -1;
+    top: 10%;
+    left: -200px;
 }
 
-nav button{
-  background:transparent;
-  border:1px solid cyan;
-  color:cyan;
-  padding:8px 15px;
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.3s;
+.background-glow.two {
+    top: 60%;
+    left: auto;
+    right: -250px;
+    background: rgba(0, 180, 255, .06);
 }
 
-nav button:hover,
-nav button.active{
-  background:cyan;
-  color:black;
-  box-shadow:0 0 15px cyan;
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.navbar {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(94%, 900px);
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+
+    background: rgba(15, 15, 22, .72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.35);
+
+    z-index: 1000;
 }
 
-/* MAIN */
-main{
-  max-width:1100px;
-  margin:auto;
-  padding:25px;
+.navbar button {
+    border: none;
+    background: transparent;
+    color: #999;
+
+    padding: 10px 14px;
+    border-radius: 12px;
+
+    cursor: pointer;
+    font-size: 12px;
+    transition: .3s;
 }
 
-/* PAGE */
-.page{
-  display:none;
-  animation:fade 0.5s;
+.navbar button:hover {
+    color: white;
+    background: rgba(255,255,255,.06);
 }
 
-.page.active{
-  display:block;
+.navbar button.active {
+    color: white;
+    background: linear-gradient(
+        135deg,
+        rgba(124,92,255,.25),
+        rgba(0,190,255,.12)
+    );
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
 }
 
-@keyframes fade{
-  from{opacity:0;transform:translateY(10px);}
-  to{opacity:1;transform:translateY(0);}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+    width: min(1100px, 92%);
+    margin: auto;
+    padding-top: 120px;
+    padding-bottom: 80px;
 }
 
-/* CARD */
-.card{
-  background:rgba(0,255,255,0.05);
-  border:1px solid cyan;
-  border-radius:15px;
-  padding:20px;
-  margin-bottom:20px;
-  box-shadow:0 0 15px cyan;
+
+/* =========================================================
+   PAGE SYSTEM
+========================================================= */
+
+.page {
+    display: none;
+    animation: pageIn .5s ease;
 }
 
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
+.page.active {
+    display: block;
 }
 
-/* SHOP */
-.shop-card{
-  text-align:center;
+@keyframes pageIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 }
 
-.shop-card .icon{
-  font-size:40px;
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    min-height: 75vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 30px 0;
 }
 
-/* BUTTON */
-.btn{
-  display:inline-block;
-  margin-top:10px;
-  padding:8px 15px;
-  background:cyan;
-  color:black;
-  border-radius:20px;
-  text-decoration:none;
-  font-weight:bold;
+.hero-label {
+    color: #8f7cff;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
 }
 
-.btn:hover{
-  background:white;
+.hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(45px, 9vw, 95px);
+    line-height: .95;
+    letter-spacing: -5px;
+
+    background: linear-gradient(
+        120deg,
+        #ffffff,
+        #a99aff,
+        #6ce7ff
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-/* FOOTER */
-footer{
-  text-align:center;
-  padding:15px;
-  border-top:1px solid cyan;
-  color:#aaa;
-  font-size:13px;
+.hero h2 {
+    margin-top: 22px;
+    font-size: clamp(18px, 3vw, 28px);
+    font-weight: 400;
+    color: #bbb;
+}
+
+.hero p {
+    max-width: 650px;
+    margin-top: 20px;
+    line-height: 1.8;
+    color: #85858f;
+}
+
+.hero-line {
+    width: 90px;
+    height: 2px;
+    margin-top: 30px;
+
+    background: linear-gradient(
+        90deg,
+        #8f7cff,
+        transparent
+    );
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.section-title {
+    margin-bottom: 30px;
+}
+
+.section-title small {
+    color: #8f7cff;
+    letter-spacing: 2px;
+}
+
+.section-title h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(32px, 6vw, 55px);
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,.055),
+        rgba(255,255,255,.015)
+    );
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+
+    padding: 25px;
+
+    backdrop-filter: blur(10px);
+
+    transition: .35s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(143,124,255,.4);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.25);
+}
+
+.card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #8c8c96;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.skill {
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-icon {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.skill span {
+    color: #777;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   DOCUMENTATION
+========================================================= */
+
+.project {
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.8),
+            rgba(0,0,0,.05)
+        ),
+        linear-gradient(
+            135deg,
+            #171522,
+            #0c1018
+        );
+}
+
+.project-number {
+    color: #8170ff;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.project h3 {
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-list {
+    display: grid;
+    gap: 12px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 16px;
+
+    background: rgba(255,255,255,.035);
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+.contact-icon {
+    font-size: 22px;
+}
+
+.contact-item span {
+    color: #aaa;
+}
+
+
+/* =========================================================
+   ANIMATION PAGE
+========================================================= */
+
+.animation-stage {
+    height: 420px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    perspective: 1000px;
+
+    overflow: hidden;
+
+    border-radius: 25px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(120,90,255,.12),
+            transparent 60%
+        ),
+        rgba(255,255,255,.02);
+
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.cube {
+    width: 120px;
+    height: 120px;
+
+    position: relative;
+
+    transform-style: preserve-3d;
+
+    animation: rotateCube 8s infinite linear;
+}
+
+.face {
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    border: 1px solid rgba(255,255,255,.3);
+
+    background: rgba(120,90,255,.08);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+
+    backdrop-filter: blur(5px);
+}
+
+.front {
+    transform: translateZ(60px);
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(60px);
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(60px);
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(60px);
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(60px);
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(60px);
+}
+
+@keyframes rotateCube {
+
+    from {
+        transform: rotateX(-20deg) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(-20deg) rotateY(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   GUESTBOOK
+========================================================= */
+
+.guestbook-intro {
+    max-width: 650px;
+    color: #85858f;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.comment-form {
+    max-width: 700px;
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.field input,
+.field textarea {
+    width: 100%;
+
+    border: 1px solid rgba(255,255,255,.09);
+    background: rgba(255,255,255,.035);
+
+    color: white;
+
+    border-radius: 14px;
+
+    padding: 14px;
+
+    outline: none;
+
+    font-size: 14px;
+
+    transition: .3s;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: rgba(143,124,255,.6);
+    box-shadow: 0 0 20px rgba(143,124,255,.08);
+}
+
+.field textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+
+/* CAMERA */
+
+.camera-button {
+    width: 100%;
+
+    padding: 15px;
+
+    border-radius: 14px;
+
+    border: 1px dashed rgba(143,124,255,.5);
+
+    background: rgba(143,124,255,.06);
+
+    color: #c2baff;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.camera-button:hover {
+    background: rgba(143,124,255,.12);
+}
+
+.camera-button strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.camera-button small {
+    color: #777;
+}
+
+
+/* HIDDEN CAMERA INPUT */
+
+#cameraInput {
+    display: none;
+}
+
+
+/* PHOTO PREVIEW */
+
+.photo-preview {
+    display: none;
+
+    margin-top: 15px;
+
+    position: relative;
+
+    width: 150px;
+}
+
+.photo-preview.active {
+    display: block;
+}
+
+.photo-preview img {
+    width: 150px;
+    height: 150px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(255,255,255,.12);
+}
+
+.remove-photo {
+    position: absolute;
+
+    top: -8px;
+    right: -8px;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255,255,255,.2);
+
+    background: #17171f;
+    color: white;
+
+    cursor: pointer;
+}
+
+
+/* SUBMIT */
+
+.submit-button {
+    border: none;
+
+    background: linear-gradient(
+        135deg,
+        #806cff,
+        #4bc8ff
+    );
+
+    color: white;
+
+    padding: 14px 25px;
+
+    border-radius: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-top: 5px;
+
+    transition: .3s;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(90,120,255,.2);
+}
+
+
+/* COMMENTS */
+
+.comments {
+    margin-top: 50px;
+}
+
+.comment-card {
+    position: relative;
+
+    display: flex;
+    gap: 15px;
+
+    padding: 20px;
+
+    margin-bottom: 15px;
+
+    background: rgba(255,255,255,.035);
+
+    border: 1px solid rgba(255,255,255,.07);
+
+    border-radius: 18px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #806cff,
+        #4bc8ff
+    );
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-name {
+    font-weight: 600;
+}
+
+.comment-date {
+    font-size: 11px;
+    color: #666;
+    margin-top: 3px;
+}
+
+.comment-text {
+    color: #aaa;
+    line-height: 1.7;
+    margin-top: 10px;
+}
+
+.comment-photo {
+    margin-top: 15px;
+
+    width: min(100%, 300px);
+
+    max-height: 350px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+
+/* ADMIN DELETE BUTTON
+   Hidden until backend/admin authentication
+   is implemented.
+*/
+
+.delete-button {
+    display: none;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 30px 15px;
+
+    color: #555;
+
+    font-size: 12px;
+
+    border-top: 1px solid rgba(255,255,255,.05);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        top: 10px;
+        border-radius: 15px;
+    }
+
+    .navbar button {
+        padding: 8px 9px;
+        font-size: 10px;
+    }
+
+    main {
+        padding-top: 115px;
+    }
+
+    .hero {
+        min-height: 70vh;
+    }
+
+    .hero h1 {
+        letter-spacing: -3px;
+    }
+
+    .animation-stage {
+        height: 330px;
+    }
+
+    .cube,
+    .face {
+        width: 90px;
+        height: 90px;
+    }
+
+    .front {
+        transform: translateZ(45px);
+    }
+
+    .back {
+        transform: rotateY(180deg) translateZ(45px);
+    }
+
+    .right {
+        transform: rotateY(90deg) translateZ(45px);
+    }
+
+    .left {
+        transform: rotateY(-90deg) translateZ(45px);
+    }
+
+    .top {
+        transform: rotateX(90deg) translateZ(45px);
+    }
+
+    .bottom {
+        transform: rotateX(-90deg) translateZ(45px);
+    }
+
+}
+
+
+/* ACCESSIBILITY */
+
+button,
+input,
+textarea {
+    font-family: inherit;
 }
 
 </style>
@@ -139,230 +839,523 @@ footer{
 
 <body>
 
-<!-- MUSIC -->
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+<div class="background-glow"></div>
+<div class="background-glow two"></div>
 
 
-<!-- NAV -->
-<nav>
-  <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
-  <button onclick="showPage('skills',this)">Skills</button>
-  <button onclick="showPage('docs',this)">Dokumentasi</button>
-  <button onclick="showPage('contact',this)">Kontak</button>
-  <button onclick="showPage('shop',this)">🛒 Warung Baix</button>
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
+<nav class="navbar">
+
+    <button class="active" onclick="showPage('dashboard', this)">
+        Dashboard
+    </button>
+
+    <button onclick="showPage('skills', this)">
+        Skills
+    </button>
+
+    <button onclick="showPage('documentation', this)">
+        Dokumentasi
+    </button>
+
+    <button onclick="showPage('contact', this)">
+        Kontak
+    </button>
+
+    <button onclick="showPage('animation', this)">
+        ✨ Animasi
+    </button>
+
+    <button onclick="showPage('comments', this)">
+        💬 Komen
+    </button>
+
 </nav>
 
 
-<!-- MAIN -->
 <main>
 
-<!-- DASHBOARD -->
+
+<!-- =======================================================
+     DASHBOARD
+======================================================= -->
+
 <section id="dashboard" class="page active">
 
-<!-- HERO -->
-<div class="card">
+    <div class="hero">
 
-  <h1 style="color:cyan;">🚀 Baix Digital Studio</h1>
-  <br>
+        <div class="hero-label">
+            Digital Creative Portfolio
+        </div>
 
-  <h3>Solusi Website & Produk Digital Modern</h3>
-  <br>
+        <h1>BAIX</h1>
 
-  <p>
-    Bangun personal branding, bisnis online, dan sistem digital
-    yang profesional, cepat, dan terpercaya.
-  </p>
+        <h2>
+            Creative • Technology • Digital
+        </h2>
 
-  <br>
+        <p>
+            Selamat datang di personal portfolio saya.
+            Explore my skills, projects, experiments,
+            dan perjalanan saya dalam dunia digital.
+        </p>
 
-  <a class="btn" href="https://wa.me/6285179816502" target="_blank">
-    Konsultasi Gratis
-  </a>
+        <div class="hero-line"></div>
 
-</div>
-
-
-<!-- ABOUT -->
-<div class="card">
-
-  <h2>👤 Tentang Saya</h2>
-  <br>
-
-  <p>
-    Saya Baix, freelancer digital yang fokus membantu UMKM,
-    kreator, dan personal brand membangun sistem online
-    dari nol sampai siap menghasilkan.
-  </p>
-
-</div>
-
-
-<!-- SERVICES -->
-<div class="card">
-
-  <h2>🛠️ Layanan</h2>
-  <br>
-
-  <ul>
-    <li>✅ Website Portfolio & UMKM</li>
-    <li>✅ Undangan Online</li>
-    <li>✅ Template Keuangan</li>
-    <li>✅ Landing Page Jualan</li>
-    <li>✅ Affiliate Setup</li>
-  </ul>
-
-</div>
-
-
-<!-- PRICE -->
-<div class="card">
-
-  <h2>💰 Paket Harga</h2>
-  <br>
-
-  <p>💍 Undangan Online → <b>Mulai 50K</b></p>
-  <p>💻 Website Portfolio → <b>Mulai 150K</b></p>
-  <p>📊 Template Keuangan → <b>Mulai 25K</b></p>
-  <p>🛍️ Affiliate Page → <b>Mulai 75K</b></p>
-
-</div>
-
-
-<!-- TESTI -->
-<div class="card">
-
-  <h2>⭐ Testimoni</h2>
-  <br>
-
-  <p>“Pelayanan cepat, hasilnya keren!” ⭐⭐⭐⭐⭐</p>
-  <p>“Website langsung jadi & profesional” ⭐⭐⭐⭐⭐</p>
-  <p>“Recommended banget” ⭐⭐⭐⭐⭐</p>
-
-</div>
-
-
-<!-- CTA -->
-<div class="card">
-
-  <h2>📲 Siap Mulai?</h2>
-  <br>
-
-  <p>Konsultasi gratis, tanpa ribet.</p>
-
-  <br>
-
-  <a class="btn" href="https://wa.me/6285179816502" target="_blank">
-    Order Sekarang
-  </a>
-
-</div>
+    </div>
 
 </section>
 
 
+<!-- =======================================================
+     SKILLS
+======================================================= -->
 
-<!-- SKILLS -->
 <section id="skills" class="page">
 
-  <div class="grid">
+    <div class="section-title">
 
-    <div class="card">HTML & CSS</div>
-    <div class="card">JavaScript</div>
-    <div class="card">Node.js</div>
-    <div class="card">Termux</div>
-    <div class="card">Cloudflare</div>
-    <div class="card">GitHub</div>
+        <small>WHAT I DO</small>
 
-  </div>
+        <h2>Skills</h2>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card skill">
+
+            <div class="skill-icon">💻</div>
+
+            <h3>Web Development</h3>
+
+            <p>
+                HTML, CSS, JavaScript dan pengembangan
+                website responsif.
+            </p>
+
+            <span>Frontend / Web</span>
+
+        </div>
+
+
+        <div class="card skill">
+
+            <div class="skill-icon">🎨</div>
+
+            <h3>Graphic Design</h3>
+
+            <p>
+                Visual design, branding, social media
+                dan kebutuhan digital.
+            </p>
+
+            <span>Creative Design</span>
+
+        </div>
+
+
+        <div class="card skill">
+
+            <div class="skill-icon">📸</div>
+
+            <h3>Photography</h3>
+
+            <p>
+                Dokumentasi visual, product photography
+                dan creative content.
+            </p>
+
+            <span>Visual Content</span>
+
+        </div>
+
+
+        <div class="card skill">
+
+            <div class="skill-icon">⚙️</div>
+
+            <h3>Technology</h3>
+
+            <p>
+                Termux, GitHub, Cloudflare dan berbagai
+                tools digital.
+            </p>
+
+            <span>Tech & Tools</span>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- DOCS -->
-<section id="docs" class="page">
+<!-- =======================================================
+     DOCUMENTATION
+======================================================= -->
 
-  <div class="card">
-    <h3>📂 Projek</h3><br>
+<section id="documentation" class="page">
 
-    <ul>
-      <li>✔ Website Portfolio</li>
-      <li>✔ WhatsApp Bot</li>
-      <li>✔ Landing Page</li>
-      <li>✔ Automation Script</li>
-      <li>✔ Affiliate Page</li>
-    </ul>
-  </div>
+    <div class="section-title">
+
+        <small>SELECTED WORK</small>
+
+        <h2>Dokumentasi</h2>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card project">
+
+            <div class="project-number">01 / WEBSITE</div>
+
+            <h3>Personal Portfolio</h3>
+
+            <p>
+                Website personal portfolio dengan
+                pendekatan modern dan interactive UI.
+            </p>
+
+        </div>
+
+
+        <div class="card project">
+
+            <div class="project-number">02 / DIGITAL</div>
+
+            <h3>Digital Project</h3>
+
+            <p>
+                Eksperimen dan project digital yang
+                pernah saya kerjakan.
+            </p>
+
+        </div>
+
+
+        <div class="card project">
+
+            <div class="project-number">03 / CREATIVE</div>
+
+            <h3>Creative Work</h3>
+
+            <p>
+                Photography, design dan berbagai
+                eksplorasi visual.
+            </p>
+
+        </div>
+
+
+        <div class="card project">
+
+            <div class="project-number">04 / EXPERIMENT</div>
+
+            <h3>Experiments</h3>
+
+            <p>
+                Berbagai percobaan teknologi,
+                animation dan interactive experience.
+            </p>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- CONTACT -->
+<!-- =======================================================
+     CONTACT
+======================================================= -->
+
 <section id="contact" class="page">
 
-  <div class="card">
+    <div class="section-title">
 
-    <h3>📞 Kontak Saya</h3><br>
+        <small>LET'S CONNECT</small>
 
-    <p>WhatsApp: <b>085179816502</b></p>
-    <p>Email: <b>baixwiguna69@gmail.com</b></p>
-    <p>Instagram: <b>@ixwgn_69</b></p>
-    <p>Facebook: <b>Ba'ix Wiguna</b></p>
+        <h2>Kontak</h2>
 
-    <br>
+    </div>
 
-    <a class="btn" href="https://wa.me/6285179816502" target="_blank">
-      Chat WhatsApp
-    </a>
 
-  </div>
+    <div class="contact-list">
+
+        <div class="contact-item">
+
+            <div class="contact-icon">📱</div>
+
+            <span>WhatsApp</span>
+
+        </div>
+
+
+        <div class="contact-item">
+
+            <div class="contact-icon">📸</div>
+
+            <span>Instagram</span>
+
+        </div>
+
+
+        <div class="contact-item">
+
+            <div class="contact-icon">✉️</div>
+
+            <span>Email</span>
+
+        </div>
+
+
+        <div class="contact-item">
+
+            <div class="contact-icon">🌐</div>
+
+            <span>Facebook</span>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- SHOP -->
-<section id="shop" class="page">
+<!-- =======================================================
+     ANIMATION
+======================================================= -->
 
-  <div class="grid">
+<section id="animation" class="page">
 
-    <div class="card shop-card">
-      <div class="icon">💍</div>
-      <h3>Undangan Online</h3>
-      <p>Website undangan modern</p>
-      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Undangan" target="_blank">
-        Order
-      </a>
+    <div class="section-title">
+
+        <small>INTERACTIVE LAB</small>
+
+        <h2>Animasi</h2>
+
     </div>
 
-    <div class="card shop-card">
-      <div class="icon">📊</div>
-      <h3>Template Keuangan</h3>
-      <p>Excel otomatis</p>
-      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Template" target="_blank">
-        Order
-      </a>
+
+    <div class="animation-stage">
+
+        <div class="cube">
+
+            <div class="face front">BAIX</div>
+
+            <div class="face back">CREATE</div>
+
+            <div class="face right">DIGITAL</div>
+
+            <div class="face left">DESIGN</div>
+
+            <div class="face top">TECH</div>
+
+            <div class="face bottom">2026</div>
+
+        </div>
+
     </div>
 
-    <div class="card shop-card">
-      <div class="icon">💻</div>
-      <h3>Website Portfolio</h3>
-      <p>Personal branding</p>
-      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Website" target="_blank">
-        Order
-      </a>
+</section>
+
+
+<!-- =======================================================
+     COMMENTS / GUESTBOOK
+======================================================= -->
+
+<section id="comments" class="page">
+
+    <div class="section-title">
+
+        <small>VISITOR GUESTBOOK</small>
+
+        <h2>Komen</h2>
+
     </div>
 
-    <div class="card shop-card">
-      <div class="icon">🛍️</div>
-      <h3>Affiliate Setup</h3>
-      <p>Landing page affiliate</p>
-      <a class="btn" href="https://wa.me/6285179816502?text=Order%20Affiliate" target="_blank">
-        Order
-      </a>
+
+    <p class="guestbook-intro">
+
+        Tinggalkan pesan untuk saya.
+        Kamu juga bisa mengambil foto langsung
+        menggunakan kamera perangkatmu.
+
+    </p>
+
+
+    <!-- COMMENT FORM -->
+
+    <div class="card comment-form">
+
+
+        <!-- NAME -->
+
+        <div class="field">
+
+            <label for="visitorName">
+                Nama
+            </label>
+
+            <input
+                id="visitorName"
+                type="text"
+                placeholder="Masukkan nama kamu"
+                maxlength="50"
+            >
+
+        </div>
+
+
+        <!-- COMMENT -->
+
+        <div class="field">
+
+            <label for="visitorComment">
+                Pesan
+            </label>
+
+            <textarea
+                id="visitorComment"
+                placeholder="Tulis komentar kamu..."
+                maxlength="500"
+            ></textarea>
+
+        </div>
+
+
+        <!-- CAMERA -->
+
+        <div class="field">
+
+            <label>
+                Foto
+            </label>
+
+
+            <!--
+                capture="environment"
+                meminta browser menggunakan
+                kamera belakang.
+            -->
+
+            <label
+                for="cameraInput"
+                class="camera-button"
+            >
+
+                <strong>
+                    📷 Ambil Foto
+                </strong>
+
+                <small>
+                    Kamera akan dibuka langsung.
+                    Tidak menggunakan galeri.
+                </small>
+
+            </label>
+
+
+            <input
+                id="cameraInput"
+                type="file"
+                accept="image/*"
+                capture="environment"
+            >
+
+
+            <!-- PREVIEW -->
+
+            <div
+                id="photoPreview"
+                class="photo-preview"
+            >
+
+                <img
+                    id="previewImage"
+                    alt="Preview foto"
+                >
+
+                <button
+                    type="button"
+                    class="remove-photo"
+                    onclick="removePhoto()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="submit-button"
+            onclick="submitComment()"
+        >
+
+            Kirim Komentar
+
+        </button>
+
+
     </div>
 
-  </div>
+
+    <!-- COMMENTS -->
+
+    <div class="comments">
+
+        <h3 style="margin-bottom:20px;">
+            Komentar Pengunjung
+        </h3>
+
+
+        <!--
+            DEMO COMMENT
+
+            Nanti komentar asli akan
+            diambil dari database.
+        -->
+
+        <div class="comment-card">
+
+            <div class="avatar">
+                B
+            </div>
+
+            <div class="comment-content">
+
+                <div class="comment-name">
+                    Baix
+                </div>
+
+                <div class="comment-date">
+                    Demo Guestbook
+                </div>
+
+                <div class="comment-text">
+
+                    Selamat datang di guestbook.
+                    Fitur komentar dan kamera
+                    sedang dipersiapkan untuk
+                    penyimpanan online.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
 
@@ -370,32 +1363,206 @@ footer{
 </main>
 
 
-<!-- FOOTER -->
 <footer>
-© 2026 Baix Portfolio | Powered by Baix
+
+    © 2026 Baix Portfolio
+    <br>
+    Creative • Technology • Digital
+
 </footer>
 
 
-<!-- SCRIPT -->
 <script>
 
-function showPage(id,btn){
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
 
-  document.querySelectorAll('.page').forEach(p=>{
-    p.classList.remove('active');
-  });
+function showPage(pageId, button) {
 
-  document.querySelectorAll('nav button').forEach(b=>{
-    b.classList.remove('active');
-  });
+    const pages =
+        document.querySelectorAll('.page');
 
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
+    pages.forEach(page => {
+
+        page.classList.remove('active');
+
+    });
+
+
+    const buttons =
+        document.querySelectorAll('.navbar button');
+
+    buttons.forEach(btn => {
+
+        btn.classList.remove('active');
+
+    });
+
+
+    document
+        .getElementById(pageId)
+        .classList.add('active');
+
+
+    button.classList.add('active');
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 
 }
+
+
+/* =========================================================
+   CAMERA
+========================================================= */
+
+const cameraInput =
+    document.getElementById('cameraInput');
+
+const photoPreview =
+    document.getElementById('photoPreview');
+
+const previewImage =
+    document.getElementById('previewImage');
+
+
+cameraInput.addEventListener(
+    'change',
+    function () {
+
+        const file = this.files[0];
+
+        if (!file) {
+            return;
+        }
+
+
+        if (!file.type.startsWith('image/')) {
+
+            alert('File yang diambil harus berupa foto.');
+
+            this.value = '';
+
+            return;
+
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function (event) {
+
+                previewImage.src =
+                    event.target.result;
+
+                photoPreview.classList.add('active');
+
+            };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* =========================================================
+   REMOVE PHOTO
+========================================================= */
+
+function removePhoto() {
+
+    cameraInput.value = '';
+
+    previewImage.src = '';
+
+    photoPreview.classList.remove('active');
+
+}
+
+
+/* =========================================================
+   COMMENT
+========================================================= */
+
+function submitComment() {
+
+    const name =
+        document
+        .getElementById('visitorName')
+        .value
+        .trim();
+
+
+    const comment =
+        document
+        .getElementById('visitorComment')
+        .value
+        .trim();
+
+
+    if (!name) {
+
+        alert('Silakan masukkan nama.');
+
+        return;
+
+    }
+
+
+    if (!comment) {
+
+        alert('Silakan tulis komentar.');
+
+        return;
+
+    }
+
+
+    /*
+        UNTUK SEKARANG DATA BELUM
+        DIKIRIM KE DATABASE.
+
+        Kita sengaja berhenti di sini
+        sampai backend/storage dibuat.
+    */
+
+    alert(
+        'Tampilan komentar sudah siap. ' +
+        'Penyimpanan online akan kita sambungkan pada tahap berikutnya.'
+    );
+
+}
+
+
+/* =========================================================
+   PREVENT ACCIDENTAL SUBMISSION
+========================================================= */
+
+document.addEventListener(
+    'keydown',
+    function(event) {
+
+        if (
+            event.key === 'Enter' &&
+            event.target.tagName !== 'TEXTAREA'
+        ) {
+
+            event.preventDefault();
+
+        }
+
+    }
+);
 
 </script>
 
 </body>
 </html>
-
