@@ -833,6 +833,48 @@ textarea {
     font-family: inherit;
 }
 
+
+/* =========================================================
+   GUESTBOOK PHOTO / LOADING
+========================================================= */
+
+.comment-photo {
+    display: block;
+    cursor: pointer;
+    transition: transform .25s ease, opacity .25s ease;
+}
+
+.comment-photo:hover {
+    transform: scale(1.015);
+}
+
+.submit-button:disabled {
+    opacity: .6;
+    cursor: wait;
+    transform: none !important;
+}
+
+.guestbook-status {
+    color: #777;
+    font-size: 13px;
+    padding: 15px 0;
+}
+
+.admin-delete-button {
+    margin-top: 14px;
+    border: 1px solid rgba(255,80,100,.25);
+    background: rgba(255,80,100,.06);
+    color: #ff9aa8;
+    border-radius: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.admin-delete-button:hover {
+    background: rgba(255,80,100,.12);
+}
+
 </style>
 </head>
 
@@ -1375,49 +1417,57 @@ textarea {
 <script>
 
 /* =========================================================
-   PAGE NAVIGATION
+   BAIX PORTFOLIO - PAGE NAVIGATION
 ========================================================= */
 
 function showPage(pageId, button) {
 
-    const pages =
-        document.querySelectorAll('.page');
+    const pages = document.querySelectorAll('.page');
 
     pages.forEach(page => {
-
         page.classList.remove('active');
-
     });
 
+    const target = document.getElementById(pageId);
 
-    const buttons =
-        document.querySelectorAll('.navbar button');
+    if (!target) {
+        console.error('Page tidak ditemukan:', pageId);
+        return;
+    }
+
+    target.classList.add('active');
+
+    const buttons = document.querySelectorAll('.navbar button');
 
     buttons.forEach(btn => {
-
         btn.classList.remove('active');
-
     });
 
-
-    document
-        .getElementById(pageId)
-        .classList.add('active');
-
-
-    button.classList.add('active');
-
+    if (button) {
+        button.classList.add('active');
+    }
 
     window.scrollTo({
         top: 0,
         behavior: 'smooth'
     });
 
+    if (pageId === 'comments') {
+        loadComments();
+    }
 }
 
 
 /* =========================================================
-   CAMERA
+   GUESTBOOK API
+========================================================= */
+
+const GUESTBOOK_API =
+    'https://baix-guestbook-api.baixwiguna69.workers.dev';
+
+
+/* =========================================================
+   CAMERA ELEMENTS
 ========================================================= */
 
 const cameraInput =
@@ -1430,47 +1480,62 @@ const previewImage =
     document.getElementById('previewImage');
 
 
-cameraInput.addEventListener(
-    'change',
-    function () {
+/* =========================================================
+   CAMERA
+========================================================= */
 
-        const file = this.files[0];
+if (cameraInput) {
 
-        if (!file) {
-            return;
+    cameraInput.addEventListener(
+        'change',
+        function () {
+
+            const file = this.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+
+                alert(
+                    'File yang diambil harus berupa foto.'
+                );
+
+                this.value = '';
+
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+
+                alert(
+                    'Ukuran foto maksimal 5 MB.'
+                );
+
+                this.value = '';
+
+                return;
+            }
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                function (event) {
+
+                    previewImage.src =
+                        event.target.result;
+
+                    photoPreview.classList.add(
+                        'active'
+                    );
+                };
+
+            reader.readAsDataURL(file);
         }
-
-
-        if (!file.type.startsWith('image/')) {
-
-            alert('File yang diambil harus berupa foto.');
-
-            this.value = '';
-
-            return;
-
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function (event) {
-
-                previewImage.src =
-                    event.target.result;
-
-                photoPreview.classList.add('active');
-
-            };
-
-
-        reader.readAsDataURL(file);
-
-    }
-);
+    );
+}
 
 
 /* =========================================================
@@ -1479,27 +1544,36 @@ cameraInput.addEventListener(
 
 function removePhoto() {
 
-    cameraInput.value = '';
+    if (cameraInput) {
+        cameraInput.value = '';
+    }
 
-    previewImage.src = '';
+    if (previewImage) {
+        previewImage.src = '';
+    }
 
-    photoPreview.classList.remove('active');
-
+    if (photoPreview) {
+        photoPreview.classList.remove(
+            'active'
+        );
+    }
 }
 
 
 /* =========================================================
-   COMMENT
+   ESCAPE TEXT
 ========================================================= */
 
-function submitComment() {
+function escapeHtml(value) {
 
-   /* =========================================================
-   BAIX GUESTBOOK API
-========================================================= */
+    const div =
+        document.createElement('div');
 
-const GUESTBOOK_API =
-    "https://baix-guestbook-api.baixwiguna69.workers.dev";
+    div.textContent =
+        value ?? '';
+
+    return div.innerHTML;
+}
 
 
 /* =========================================================
@@ -1509,33 +1583,55 @@ const GUESTBOOK_API =
 async function loadComments() {
 
     const container =
-        document.querySelector(".comments");
+        document.querySelector('.comments');
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <h3 style="margin-bottom:20px;">
+            Komentar Pengunjung
+        </h3>
+
+        <div class="guestbook-status">
+            Memuat komentar...
+        </div>
+    `;
 
     try {
 
         const response =
             await fetch(
-                `${GUESTBOOK_API}/comments`
+                `${GUESTBOOK_API}/comments`,
+                {
+                    method: 'GET',
+                    cache: 'no-store'
+                }
             );
 
         const data =
             await response.json();
 
-        if (!data.success) {
+        if (!response.ok ||
+            !data.success) {
+
             throw new Error(
                 data.message ||
-                "Gagal mengambil komentar."
+                'Gagal mengambil komentar.'
             );
         }
 
-        renderComments(data.comments);
+        renderComments(
+            Array.isArray(data.comments)
+                ? data.comments
+                : []
+        );
 
     } catch (error) {
 
         console.error(
-            "Guestbook:",
+            'Guestbook GET error:',
             error
         );
 
@@ -1548,6 +1644,7 @@ async function loadComments() {
                 <div class="comment-content">
                     <div class="comment-text">
                         Komentar belum dapat dimuat.
+                        Coba refresh halaman.
                     </div>
                 </div>
             </div>
@@ -1563,29 +1660,44 @@ async function loadComments() {
 function renderComments(comments) {
 
     const container =
-        document.querySelector(".comments");
+        document.querySelector('.comments');
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
-    container.innerHTML = `
-        <h3 style="margin-bottom:20px;">
-            Komentar Pengunjung
-        </h3>
-    `;
+    container.innerHTML = '';
+
+    const title =
+        document.createElement('h3');
+
+    title.style.marginBottom =
+        '20px';
+
+    title.textContent =
+        'Komentar Pengunjung';
+
+    container.appendChild(title);
 
 
     if (!comments.length) {
 
-        container.innerHTML += `
-            <div class="comment-card">
-                <div class="comment-content">
-                    <div class="comment-text">
-                        Belum ada komentar.
-                        Jadilah yang pertama meninggalkan pesan.
-                    </div>
+        const empty =
+            document.createElement('div');
+
+        empty.className =
+            'comment-card';
+
+        empty.innerHTML = `
+            <div class="comment-content">
+                <div class="comment-text">
+                    Belum ada komentar.
+                    Jadilah yang pertama meninggalkan pesan.
                 </div>
             </div>
         `;
+
+        container.appendChild(empty);
 
         return;
     }
@@ -1594,91 +1706,126 @@ function renderComments(comments) {
     comments.forEach(comment => {
 
         const card =
-            document.createElement("div");
+            document.createElement('div');
 
         card.className =
-            "comment-card";
+            'comment-card';
 
 
-        const firstLetter =
-            (comment.name || "?")
+        const avatar =
+            document.createElement('div');
+
+        avatar.className =
+            'avatar';
+
+        avatar.textContent =
+            (comment.name || '?')
             .charAt(0)
             .toUpperCase();
 
 
+        const content =
+            document.createElement('div');
+
+        content.className =
+            'comment-content';
+
+
+        const name =
+            document.createElement('div');
+
+        name.className =
+            'comment-name';
+
+        name.textContent =
+            comment.name || 'Pengunjung';
+
+
         const date =
-            comment.createdAt
-                ? new Date(
+            document.createElement('div');
+
+        date.className =
+            'comment-date';
+
+        if (comment.createdAt) {
+
+            const parsedDate =
+                new Date(
                     comment.createdAt
-                  ).toLocaleString(
-                    "id-ID",
-                    {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    }
-                  )
-                : "";
+                );
+
+            if (!Number.isNaN(
+                parsedDate.getTime()
+            )) {
+
+                date.textContent =
+                    parsedDate.toLocaleString(
+                        'id-ID',
+                        {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        }
+                    );
+            }
+        }
 
 
-        card.innerHTML = `
+        const text =
+            document.createElement('div');
 
-            <div class="avatar">
-                ${escapeHtml(firstLetter)}
-            </div>
+        text.className =
+            'comment-text';
 
-            <div class="comment-content">
+        text.textContent =
+            comment.comment || '';
 
-                <div class="comment-name">
-                    ${escapeHtml(comment.name)}
-                </div>
 
-                <div class="comment-date">
-                    ${escapeHtml(date)}
-                </div>
+        content.appendChild(name);
+        content.appendChild(date);
+        content.appendChild(text);
 
-                <div class="comment-text">
-                    ${escapeHtml(comment.comment)}
-                </div>
 
-                ${
-                    comment.photoUrl
-                    ? `
-                        <img
-                            src="${escapeHtml(comment.photoUrl)}"
-                            alt="Foto pengunjung"
-                            class="comment-photo"
-                            loading="lazy"
-                            onclick="openGuestPhoto('${encodeURI(comment.photoUrl)}')"
-                        >
-                    `
-                    : ""
+        if (comment.photoUrl) {
+
+            const photo =
+                document.createElement('img');
+
+            photo.className =
+                'comment-photo';
+
+            photo.src =
+                comment.photoUrl;
+
+            photo.alt =
+                `Foto dari ${comment.name || 'pengunjung'}`;
+
+            photo.loading =
+                'lazy';
+
+            photo.addEventListener(
+                'click',
+                function () {
+                    window.open(
+                        comment.photoUrl,
+                        '_blank',
+                        'noopener'
+                    );
                 }
+            );
 
-            </div>
-        `;
+            content.appendChild(photo);
+        }
+
+
+        card.appendChild(avatar);
+        card.appendChild(content);
 
         container.appendChild(card);
 
     });
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        text ?? "";
-
-    return div.innerHTML;
 }
 
 
@@ -1690,18 +1837,30 @@ async function submitComment() {
 
     const nameInput =
         document.getElementById(
-            "visitorName"
+            'visitorName'
         );
 
     const commentInput =
         document.getElementById(
-            "visitorComment"
+            'visitorComment'
         );
 
     const button =
         document.querySelector(
-            ".submit-button"
+            '.submit-button'
         );
+
+
+    if (!nameInput ||
+        !commentInput ||
+        !button) {
+
+        console.error(
+            'Elemen guestbook tidak ditemukan.'
+        );
+
+        return;
+    }
 
 
     const name =
@@ -1711,15 +1870,16 @@ async function submitComment() {
         commentInput.value.trim();
 
     const photo =
-        cameraInput.files[0];
+        cameraInput &&
+        cameraInput.files.length
+            ? cameraInput.files[0]
+            : null;
 
-
-    /* VALIDASI */
 
     if (!name) {
 
         alert(
-            "Silakan masukkan nama."
+            'Silakan masukkan nama.'
         );
 
         nameInput.focus();
@@ -1731,7 +1891,7 @@ async function submitComment() {
     if (!comment) {
 
         alert(
-            "Silakan tulis komentar."
+            'Silakan tulis komentar.'
         );
 
         commentInput.focus();
@@ -1740,15 +1900,45 @@ async function submitComment() {
     }
 
 
-    /* LOADING */
+    if (name.length > 50) {
+
+        alert(
+            'Nama maksimal 50 karakter.'
+        );
+
+        return;
+    }
+
+
+    if (comment.length > 500) {
+
+        alert(
+            'Komentar maksimal 500 karakter.'
+        );
+
+        return;
+    }
+
+
+    if (photo &&
+        photo.size > 5 * 1024 * 1024) {
+
+        alert(
+            'Ukuran foto maksimal 5 MB.'
+        );
+
+        return;
+    }
+
 
     const originalText =
         button.innerHTML;
 
-    button.disabled = true;
+    button.disabled =
+        true;
 
     button.innerHTML =
-        "⏳ Mengirim...";
+        '⏳ Mengirim...';
 
 
     try {
@@ -1756,15 +1946,13 @@ async function submitComment() {
         const formData =
             new FormData();
 
-
         formData.append(
-            "name",
+            'name',
             name
         );
 
-
         formData.append(
-            "comment",
+            'comment',
             comment
         );
 
@@ -1772,10 +1960,10 @@ async function submitComment() {
         if (photo) {
 
             formData.append(
-                "photo",
+                'photo',
                 photo,
                 photo.name ||
-                "guest-photo.jpg"
+                'guest-photo.jpg'
             );
         }
 
@@ -1784,7 +1972,7 @@ async function submitComment() {
             await fetch(
                 `${GUESTBOOK_API}/comments`,
                 {
-                    method: "POST",
+                    method: 'POST',
                     body: formData
                 }
             );
@@ -1799,44 +1987,42 @@ async function submitComment() {
 
             throw new Error(
                 data.message ||
-                "Komentar gagal dikirim."
+                'Komentar gagal dikirim.'
             );
         }
 
 
-        /* RESET */
+        nameInput.value = '';
 
-        nameInput.value = "";
-
-        commentInput.value = "";
+        commentInput.value = '';
 
         removePhoto();
 
-
-        /* LOAD ULANG */
 
         await loadComments();
 
 
         alert(
-            "Komentar berhasil dikirim. ❤️"
+            'Komentar berhasil dikirim. ❤️'
         );
 
 
     } catch (error) {
 
         console.error(
+            'Guestbook POST error:',
             error
         );
 
         alert(
             error.message ||
-            "Komentar gagal dikirim."
+            'Komentar gagal dikirim.'
         );
 
     } finally {
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.innerHTML =
             originalText;
@@ -1845,39 +2031,21 @@ async function submitComment() {
 
 
 /* =========================================================
-   OPEN PHOTO
+   ADMIN DELETE
+   =========================================================
+   Untuk tahap berikutnya kita bisa menambahkan
+   panel admin. ADMIN_KEY TIDAK ditanam di HTML
+   agar tidak bocor ke pengunjung.
 ========================================================= */
-
-function openGuestPhoto(url) {
-
-    window.open(
-        url,
-        "_blank"
-    );
-}
 
 
 /* =========================================================
-   LOAD COMMENTS WHEN PAGE OPENS
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        loadComments();
-
-    }
-);
-
-
-/* =========================================================
-   PREVENT ACCIDENTAL SUBMISSION
+   PREVENT ACCIDENTAL ENTER SUBMISSION
 ========================================================= */
 
 document.addEventListener(
     'keydown',
-    function(event) {
+    function (event) {
 
         if (
             event.key === 'Enter' &&
@@ -1885,9 +2053,34 @@ document.addEventListener(
         ) {
 
             event.preventDefault();
-
         }
+    }
+);
 
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        /*
+         * Dashboard tetap aktif saat pertama kali dibuka.
+         * Guestbook baru di-load ketika menu Komen dibuka.
+         */
+
+        const dashboard =
+            document.getElementById(
+                'dashboard'
+            );
+
+        if (dashboard) {
+            dashboard.classList.add(
+                'active'
+            );
+        }
     }
 );
 
