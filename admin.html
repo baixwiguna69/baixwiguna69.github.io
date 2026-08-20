@@ -1,1 +1,749 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Baix Admin Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b0f19;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: min(100% - 30px, 900px);
+            margin: auto;
+            padding: 30px 0 60px;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #8d96a8;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #202938;
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #aab3c5;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border-radius: 10px;
+            border: 1px solid #30394a;
+            background: #0b0f19;
+            color: white;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #667085;
+        }
+
+        button {
+            border: 0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .login-button {
+            width: 100%;
+            margin-top: 15px;
+            background: #ffffff;
+            color: #111111;
+        }
+
+        .logout-button {
+            background: #202938;
+            color: white;
+        }
+
+        .danger-button {
+            background: #b42318;
+            color: white;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toolbar h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .comment-card {
+            background: #0b0f19;
+            border: 1px solid #202938;
+            border-radius: 15px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .comment-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .comment-name {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .comment-date {
+            color: #727d91;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .comment-text {
+            margin-top: 14px;
+            line-height: 1.6;
+            color: #d8deea;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .comment-photo {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            margin-top: 15px;
+            border-radius: 12px;
+            background: #05070b;
+        }
+
+        .actions {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .status {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #8d96a8;
+        }
+
+        .error {
+            color: #ff8a80;
+        }
+
+        .success {
+            color: #7ee787;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #727d91;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: min(100% - 20px, 900px);
+                padding-top: 20px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .comment-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Baix Admin Dashboard</h1>
+        <p>Guestbook management</p>
+    </div>
+
+    <!-- LOGIN -->
+
+    <div id="loginCard" class="card">
+
+        <label for="adminKey">
+            Admin Key
+        </label>
+
+        <input
+            id="adminKey"
+            type="password"
+            placeholder="Masukkan ADMIN_KEY"
+            autocomplete="off"
+        >
+
+        <button
+            class="login-button"
+            type="button"
+            onclick="login()"
+        >
+            Masuk Dashboard
+        </button>
+
+        <div
+            id="loginStatus"
+            class="status"
+        ></div>
+
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <div
+        id="dashboard"
+        class="hidden"
+    >
+
+        <div class="card">
+
+            <div class="toolbar">
+
+                <h2>
+                    Komentar Pengunjung
+                </h2>
+
+                <button
+                    class="logout-button"
+                    type="button"
+                    onclick="logout()"
+                >
+                    Keluar
+                </button>
+
+            </div>
+
+            <div
+                id="commentsList"
+            >
+                <div class="empty">
+                    Memuat komentar...
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const GUESTBOOK_API =
+    "https://baix-guestbook-api.baixwiguna69.workers.dev";
+
+let adminKey = "";
+
+
+// ================================
+// LOGIN
+// ================================
+
+async function login() {
+
+    const input =
+        document.getElementById("adminKey");
+
+    const status =
+        document.getElementById("loginStatus");
+
+    const key =
+        input.value.trim();
+
+    if (!key) {
+
+        status.textContent =
+            "Masukkan Admin Key.";
+
+        status.className =
+            "status error";
+
+        return;
+    }
+
+    status.textContent =
+        "Memeriksa...";
+
+    status.className =
+        "status";
+
+
+    /*
+        Kita melakukan request DELETE
+        yang sengaja dibuat tidak valid.
+
+        Tujuannya hanya untuk memeriksa
+        apakah ADMIN_KEY yang dimasukkan
+        benar.
+
+        Karena ID tersebut tidak ada,
+        key yang benar akan menghasilkan
+        404 "Komentar tidak ditemukan".
+
+        Key salah akan menghasilkan 401.
+    */
+
+    try {
+
+        const response =
+            await fetch(
+                `${GUESTBOOK_API}/comments/__admin_test__`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization":
+                            `Bearer ${key}`
+                    }
+                }
+            );
+
+        const data =
+            await response.json();
+
+
+        if (response.status === 401) {
+
+            status.textContent =
+                "Admin Key salah.";
+
+            status.className =
+                "status error";
+
+            return;
+        }
+
+
+        /*
+            404 berarti Worker menerima
+            key kita dan autentikasi berhasil,
+            tetapi komentar test memang
+            tidak ada.
+        */
+
+        if (
+            response.status === 404 ||
+            data.message ===
+            "Komentar tidak ditemukan."
+        ) {
+
+            adminKey = key;
+
+            input.value = "";
+
+            document
+                .getElementById("loginCard")
+                .classList.add("hidden");
+
+            document
+                .getElementById("dashboard")
+                .classList.remove("hidden");
+
+            await loadComments();
+
+            return;
+        }
+
+
+        status.textContent =
+            data.message ||
+            "Gagal memverifikasi Admin Key.";
+
+        status.className =
+            "status error";
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+            "Tidak dapat terhubung ke Worker.";
+
+        status.className =
+            "status error";
+    }
+}
+
+
+// ================================
+// LOAD COMMENTS
+// ================================
+
+async function loadComments() {
+
+    const container =
+        document.getElementById(
+            "commentsList"
+        );
+
+    container.innerHTML = `
+        <div class="empty">
+            Memuat komentar...
+        </div>
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${GUESTBOOK_API}/comments`
+            );
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Gagal mengambil komentar."
+            );
+        }
+
+
+        renderComments(
+            data.comments || []
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        container.innerHTML = `
+            <div class="empty error">
+                ${escapeHtml(
+                    error.message ||
+                    "Gagal memuat komentar."
+                )}
+            </div>
+        `;
+    }
+}
+
+
+// ================================
+// RENDER COMMENTS
+// ================================
+
+function renderComments(comments) {
+
+    const container =
+        document.getElementById(
+            "commentsList"
+        );
+
+
+    if (!comments.length) {
+
+        container.innerHTML = `
+            <div class="empty">
+                Belum ada komentar.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        comments
+            .slice()
+            .reverse()
+            .map(
+                comment =>
+                    createCommentHTML(
+                        comment
+                    )
+            )
+            .join("");
+}
+
+
+// ================================
+// COMMENT HTML
+// ================================
+
+function createCommentHTML(comment) {
+
+    const id =
+        escapeHtml(
+            comment.id || ""
+        );
+
+    const name =
+        escapeHtml(
+            comment.name || "Tanpa nama"
+        );
+
+    const text =
+        escapeHtml(
+            comment.comment || ""
+        );
+
+    const date =
+        comment.createdAt
+            ? formatDate(
+                comment.createdAt
+            )
+            : "";
+
+
+    let photoHTML = "";
+
+
+    if (comment.photoUrl) {
+
+        photoHTML = `
+            <img
+                class="comment-photo"
+                src="${escapeHtml(
+                    comment.photoUrl
+                )}"
+                alt="Foto komentar"
+                loading="lazy"
+            >
+        `;
+    }
+
+
+    return `
+        <div class="comment-card">
+
+            <div class="comment-top">
+
+                <div>
+
+                    <div class="comment-name">
+                        ${name}
+                    </div>
+
+                    <div class="comment-date">
+                        ${date}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="comment-text">
+                ${text}
+            </div>
+
+
+            ${photoHTML}
+
+
+            <div class="actions">
+
+                <button
+                    class="danger-button"
+                    type="button"
+                    onclick="deleteComment('${id}')"
+                >
+                    🗑️ Hapus Komentar + Foto
+                </button>
+
+            </div>
+
+        </div>
+    `;
+}
+
+
+// ================================
+// DELETE COMMENT + PHOTO
+// ================================
+
+async function deleteComment(id) {
+
+    if (!id) {
+        return;
+    }
+
+
+    const confirmed =
+        confirm(
+            "Hapus komentar ini BESERTA fotonya dari R2?\n\nTindakan ini tidak dapat dibatalkan."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${GUESTBOOK_API}/comments/${encodeURIComponent(id)}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization":
+                            `Bearer ${adminKey}`
+                    }
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Gagal menghapus komentar."
+            );
+        }
+
+
+        alert(
+            "Komentar dan foto berhasil dihapus."
+        );
+
+
+        await loadComments();
+
+    } catch (error) {
+
+        console.error(
+            "DELETE ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Gagal menghapus komentar."
+        );
+    }
+}
+
+
+// ================================
+// LOGOUT
+// ================================
+
+function logout() {
+
+    adminKey = "";
+
+    document
+        .getElementById("dashboard")
+        .classList.add("hidden");
+
+    document
+        .getElementById("loginCard")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("loginStatus")
+        .textContent = "";
+
+}
+
+
+// ================================
+// DATE
+// ================================
+
+function formatDate(dateString) {
+
+    const date =
+        new Date(dateString);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "";
+    }
+
+
+    return date.toLocaleString(
+        "id-ID",
+        {
+            dateStyle: "medium",
+            timeStyle: "short"
+        }
+    );
+}
+
+
+// ================================
+// HTML ESCAPE
+// ================================
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+</script>
+
+</body>
+</html>
