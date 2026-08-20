@@ -369,6 +369,214 @@ main {
 }
 
 
+   /* =========================================
+   PROJECT DETAIL
+========================================= */
+
+.project-detail {
+    padding: 30px 0 80px;
+}
+
+.project-detail-header {
+    margin-bottom: 45px;
+}
+
+.project-detail-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    color: #aaa;
+
+    padding: 10px 16px;
+    border-radius: 12px;
+
+    font-size: 13px;
+    cursor: pointer;
+
+    transition: .3s ease;
+}
+
+.project-detail-back:hover {
+    color: #fff;
+    background: rgba(255,255,255,.08);
+}
+
+.project-detail-number {
+    margin-top: 35px;
+
+    color: #8170ff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.project-detail-title {
+    margin-top: 12px;
+    font-size: 38px;
+    line-height: 1.15;
+}
+
+.project-detail-subtitle {
+    margin-top: 15px;
+    color: #888;
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 700px;
+}
+
+.project-detail-section {
+    margin-top: 55px;
+}
+
+.project-detail-section h3 {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.project-detail-section p {
+    color: #999;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.project-tag {
+    padding: 9px 13px;
+
+    background: rgba(129,112,255,.08);
+    border: 1px solid rgba(129,112,255,.18);
+
+    border-radius: 10px;
+
+    color: #aaa;
+    font-size: 12px;
+}
+
+.project-feature-list {
+    display: grid;
+    gap: 10px;
+}
+
+.project-feature {
+    padding: 14px 16px;
+
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.06);
+
+    border-radius: 12px;
+
+    color: #aaa;
+    font-size: 14px;
+}
+
+.project-feature::before {
+    content: "✓";
+    color: #8170ff;
+    margin-right: 10px;
+}
+
+.project-code {
+    background: #080a10;
+    border: 1px solid rgba(255,255,255,.07);
+
+    border-radius: 14px;
+    padding: 20px;
+
+    overflow-x: auto;
+
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #aaa;
+}
+
+.project-architecture {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    padding: 25px;
+}
+
+.architecture-box {
+    width: min(100%, 320px);
+
+    padding: 14px;
+
+    text-align: center;
+
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: 12px;
+
+    color: #ccc;
+    font-size: 13px;
+}
+
+.architecture-arrow {
+    color: #8170ff;
+}
+
+.project-problem {
+    padding: 20px;
+
+    background: rgba(255,255,255,.03);
+    border-left: 2px solid #8170ff;
+
+    border-radius: 0 12px 12px 0;
+
+    margin-bottom: 15px;
+}
+
+.project-problem strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.project-link-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 18px;
+
+    border-radius: 12px;
+
+    background: rgba(129,112,255,.12);
+    border: 1px solid rgba(129,112,255,.2);
+
+    color: #aaa;
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: .3s ease;
+}
+
+.project-link-button:hover {
+    color: #fff;
+    background: rgba(129,112,255,.2);
+}
+
+
 /* =========================================================
    CONTACT
 ========================================================= */
@@ -2163,6 +2371,84 @@ document.addEventListener(
     }
 );
 
+/* =========================================
+   PROJECT DOCUMENTATION
+========================================= */
+
+function openProject(project) {
+
+    if (project !== "portfolio") {
+        return;
+    }
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(function(page) {
+
+        page.classList.remove("active");
+
+    });
+
+
+    const detail =
+        document.getElementById(
+            "project-detail"
+        );
+
+    if (!detail) {
+        return;
+    }
+
+
+    detail.classList.add("active");
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+function closeProject() {
+
+    const detail =
+        document.getElementById(
+            "project-detail"
+        );
+
+    if (detail) {
+
+        detail.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    const documentation =
+        document.getElementById(
+            "documentation"
+        );
+
+    if (documentation) {
+
+        documentation.classList.add(
+            "active"
+        );
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+   
 </script>
 
 </body>
